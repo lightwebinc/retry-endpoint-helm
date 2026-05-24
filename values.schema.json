@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "bitcoin-retry-endpoint values",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "replicaCount": { "type": "integer", "minimum": 0 },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "pullPolicy": { "type": "string", "enum": ["Always", "IfNotPresent", "Never"] },
+        "tag": { "type": "string" }
+      },
+      "required": ["repository", "pullPolicy"]
+    },
+    "networking": {
+      "type": "object",
+      "properties": {
+        "mode": { "type": "string", "enum": ["multus", "host", "unicast"] }
+      },
+      "required": ["mode"]
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "listenPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "nackPort":     { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "egressPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "shardBits":    { "type": "integer", "minimum": 1, "maximum": 15 },
+        "mcScope":      { "type": "string", "enum": ["link", "site", "org", "global"] },
+        "cacheBackend": { "type": "string", "enum": ["memory", "redis"] },
+        "beaconScope":  { "type": "string", "enum": ["link", "site", "org", "global", "both", "all"] },
+        "beaconTier":       { "type": "integer", "minimum": 0, "maximum": 255 },
+        "beaconPreference": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "debug":        { "type": "boolean" }
+      }
+    }
+  }
+}

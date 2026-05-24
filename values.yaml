@@ -1,0 +1,160 @@
+# Default values for bitcoin-retry-endpoint.
+# Every binary flag is exposed under .config; advanced ones empty/disabled by default.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/lightwebinc/bitcoin-retry-endpoint
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+
+# Multicast ingress + egress on dedicated fabric NIC requires NET_ADMIN.
+securityContext:
+  capabilities:
+    add: ["NET_ADMIN"]
+
+networking:
+  mode: multus
+  multus:
+    networkName: mcast-fabric
+    namespace: bitcoin-mcast
+    fabricIPv6: ""
+    interface: net1
+  host:
+    dnsPolicy: ClusterFirstWithHostNet
+
+# Full surface — every flag in bitcoin-retry-endpoint/config/config.go.
+config:
+  # Ingress (multicast receive)
+  mcIface: "eth0"
+  listenPort: 9001
+  shardBits: 2          # standardized at 2 across all charts; binary defaults to 8
+  mcScope: "site"
+  mcGroupId: "0x000B"
+
+  # Egress (retransmission)
+  egressIface: "eth0"   # comma-separated allowed
+  egressPort: 9001
+  dedupWindow: "60s"
+
+  # NACK server
+  nackPort: 9300
+  # nackAddr is REQUIRED in containerized deployments. The binary will
+  # auto-detect from the egress interface if unset, but the detected SLAAC
+  # address may mismatch what listeners trust (per their RETRY_ENDPOINTS).
+  # Set explicitly to the pod's fabric IPv6 (no CIDR suffix).
+  nackAddr: ""
+  nackWorkers: 0        # 0 = NumCPU
+
+  # Cache
+  cacheBackend: "memory"  # memory | redis
+  redisAddr: ""           # required when cacheBackend=redis; cross-instance dedup with memory backend
+  cacheTtl: "60s"
+  cacheTtlTx: "60s"
+  cacheTtlBlock: "10m"
+  cacheTtlSubtree: "5m"
+  cacheTtlAnchor: "2m"
+  cacheMaxKeys: 0
+
+  # Rate limits
+  rlIpRate: 100
+  rlIpBurst: 10
+  rlChainRate: 500
+  rlChainWindow: "1m"
+  rlSequenceMax: 100
+  rlSequenceWindow: "1m"
+  rlGroupRate: 200
+  rlGroupBurst: 50
+
+  # Beacon (BRC-126) ADVERT multicast
+  beaconEnabled: true
+  beaconTier: 0
+  beaconPreference: 128
+  beaconInterval: "60s"
+  beaconScope: "site"     # link | site | org | global | both | all
+  beaconFlagsUnicast: false
+  beaconFlagsMulticast: true
+  beaconFlagsDraining: false
+
+  # Response suppression
+  suppressAck: false
+  suppressMiss: false
+
+  # BRC-132 subtree data
+  subtreeDataEnabled: false
+
+  # Runtime
+  drainTimeout: "0s"
+  debug: false
+
+  # Observability
+  metricsAddr: ":9400"
+  instanceId: ""
+  otlpEndpoint: ""
+  otlpInterval: "30s"
+
+service:
+  type: ClusterIP
+  metricsPort: 9400
+
+metrics:
+  enabled: true
+  path: /metrics
+  port: 9400
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    scrapeTimeout: 10s
+    labels: {}
+    relabelings: []
+    metricRelabelings: []
+
+probes:
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+  liveness:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+priorityClassName: ""
+topologySpreadConstraints: []
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+networkPolicy:
+  enabled: false
+  ingressFrom: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+
+extraEnv: []
