@@ -41,7 +41,7 @@ config:
   # Ingress (multicast receive)
   mcIface: "eth0"
   listenPort: 9001
-  shardBits: 2          # standardized at 2 across all charts; binary defaults to 8
+  shardBits: 2          # standardized at 2 across all charts and binary default
   mcScope: "site"
   mcGroupId: "0x000B"
 
