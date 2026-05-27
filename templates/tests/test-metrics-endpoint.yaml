@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "bitcoin-retry-endpoint.fullname" . }}-test-metrics"
+  name: "{{ include "retry-endpoint.fullname" . }}-test-metrics"
   labels:
-    {{- include "bitcoin-retry-endpoint.labels" . | nindent 4 }}
+    {{- include "retry-endpoint.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
@@ -16,5 +16,5 @@ spec:
         - sh
         - -c
         - |
-          wget -q -O - http://{{ include "bitcoin-retry-endpoint.fullname" . }}:{{ .Values.service.metricsPort }}/healthz \
-            && wget -q -O - http://{{ include "bitcoin-retry-endpoint.fullname" . }}:{{ .Values.service.metricsPort }}{{ .Values.metrics.path }} > /dev/null
+          wget -q -O - http://{{ include "retry-endpoint.fullname" . }}:{{ .Values.service.metricsPort }}/healthz \
+            && wget -q -O - http://{{ include "retry-endpoint.fullname" . }}:{{ .Values.service.metricsPort }}{{ .Values.metrics.path }} > /dev/null

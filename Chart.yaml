@@ -1,5 +1,5 @@
 apiVersion: v2
-name: bitcoin-retry-endpoint
+name: retry-endpoint
 description: BSV multicast retry endpoint — caches frames and retransmits on NACK
 type: application
 version: 0.1.0
@@ -12,14 +12,14 @@ keywords:
   - brc-124
   - brc-126
   - brc-128
-home: https://github.com/lightwebinc/bitcoin-retry-endpoint
+home: https://github.com/lightwebinc/retry-endpoint
 sources:
-  - https://github.com/lightwebinc/bitcoin-retry-endpoint
-  - https://github.com/lightwebinc/bitcoin-retry-endpoint-helm
+  - https://github.com/lightwebinc/retry-endpoint
+  - https://github.com/lightwebinc/retry-endpoint-helm
 maintainers:
   - name: lightwebinc
     url: https://github.com/lightwebinc
-icon: https://raw.githubusercontent.com/lightwebinc/bitcoin-multicast/main/.assets/icon.png
+icon: https://raw.githubusercontent.com/lightwebinc/bsv-multicast/main/.assets/icon.png
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/changes: |

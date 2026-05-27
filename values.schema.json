@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "bitcoin-retry-endpoint values",
+  "title": "retry-endpoint values",
   "type": "object",
   "additionalProperties": true,
   "properties": {

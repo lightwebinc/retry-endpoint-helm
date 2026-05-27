@@ -1,18 +1,18 @@
-# bitcoin-retry-endpoint Helm chart
+# retry-endpoint Helm chart
 
-Helm chart for [bitcoin-retry-endpoint](https://github.com/lightwebinc/bitcoin-retry-endpoint) — the BSV multicast retry endpoint that caches frames and retransmits them on NACK.
+Helm chart for [retry-endpoint](https://github.com/lightwebinc/retry-endpoint) — the BSV multicast retry endpoint that caches frames and retransmits them on NACK.
 
-This repository packages templates, default values, JSON Schema validation, and CI workflows for the retry endpoint. The application source lives in [`bitcoin-retry-endpoint`](https://github.com/lightwebinc/bitcoin-retry-endpoint).
+This repository packages templates, default values, JSON Schema validation, and CI workflows for the retry endpoint. The application source lives in [`retry-endpoint`](https://github.com/lightwebinc/retry-endpoint).
 
 ## Install
 
-> The chart references `ghcr.io/lightwebinc/bitcoin-retry-endpoint:<appVersion>`. The image is delivered by Phase 1 of the containerization roadmap; until then `helm template` succeeds but `helm install` results in `ImagePullBackOff`.
+> The chart references `ghcr.io/lightwebinc/retry-endpoint:<appVersion>`. The image is delivered by Phase 1 of the containerization roadmap; until then `helm template` succeeds but `helm install` results in `ImagePullBackOff`.
 
 ```bash
-helm install retry-node-1 oci://ghcr.io/lightwebinc/charts/bitcoin-retry-endpoint \
-  --version 0.1.0 -n bitcoin-mcast --create-namespace \
+helm install retry-node-1 oci://ghcr.io/lightwebinc/charts/retry-endpoint \
+  --version 0.1.0 -n bsv-mcast --create-namespace \
   --set config.nackAddr=fd20::24 \
-  --set 'nodeSelector.bitcoin-mcast/node=retry-1'
+  --set 'nodeSelector.bsv-mcast/node=retry-1'
 ```
 
 ## Critical configuration
@@ -47,7 +47,7 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 ## Helm test
 
 ```bash
-helm test retry-node-1 -n bitcoin-mcast
+helm test retry-node-1 -n bsv-mcast
 ```
 
 ## Release

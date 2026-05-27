@@ -1,8 +1,8 @@
-{{- define "bitcoin-retry-endpoint.name" -}}
+{{- define "retry-endpoint.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.fullname" -}}
+{{- define "retry-endpoint.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -15,32 +15,32 @@
 {{- end -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.chart" -}}
+{{- define "retry-endpoint.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.labels" -}}
-helm.sh/chart: {{ include "bitcoin-retry-endpoint.chart" . }}
-{{ include "bitcoin-retry-endpoint.selectorLabels" . }}
+{{- define "retry-endpoint.labels" -}}
+helm.sh/chart: {{ include "retry-endpoint.chart" . }}
+{{ include "retry-endpoint.selectorLabels" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/part-of: bitcoin-multicast
+app.kubernetes.io/part-of: bsv-multicast
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "bitcoin-retry-endpoint.name" . }}
+{{- define "retry-endpoint.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "retry-endpoint.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.serviceAccountName" -}}
+{{- define "retry-endpoint.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-{{- default (include "bitcoin-retry-endpoint.fullname" .) .Values.serviceAccount.name -}}
+{{- default (include "retry-endpoint.fullname" .) .Values.serviceAccount.name -}}
 {{- else -}}
 {{- default "default" .Values.serviceAccount.name -}}
 {{- end -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.multusAnnotation" -}}
+{{- define "retry-endpoint.multusAnnotation" -}}
 {{- if eq .Values.networking.mode "multus" -}}
 k8s.v1.cni.cncf.io/networks: |
   [{
@@ -54,7 +54,7 @@ k8s.v1.cni.cncf.io/networks: |
 {{- end -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.iface" -}}
+{{- define "retry-endpoint.iface" -}}
 {{- if eq .Values.networking.mode "multus" -}}
 {{- .Values.networking.multus.interface -}}
 {{- else -}}
@@ -62,11 +62,11 @@ k8s.v1.cni.cncf.io/networks: |
 {{- end -}}
 {{- end -}}
 
-{{- define "bitcoin-retry-endpoint.env" -}}
+{{- define "retry-endpoint.env" -}}
 - name: MC_IFACE
-  value: {{ include "bitcoin-retry-endpoint.iface" . | quote }}
+  value: {{ include "retry-endpoint.iface" . | quote }}
 - name: EGRESS_IFACE
-  value: {{ include "bitcoin-retry-endpoint.iface" . | quote }}
+  value: {{ include "retry-endpoint.iface" . | quote }}
 - name: LISTEN_PORT
   value: {{ .Values.config.listenPort | quote }}
 - name: SHARD_BITS

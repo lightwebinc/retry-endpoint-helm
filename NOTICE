@@ -1,11 +1,11 @@
-bitcoin-retry-endpoint-helm
+retry-endpoint-helm
 Copyright 2026 Lightweb Inc. (https://lightweb.net)
 
 =========================================================================
 
-This repository contains the Helm chart for deploying bitcoin-retry-endpoint
+This repository contains the Helm chart for deploying retry-endpoint
 on Kubernetes. The chart packages templates, default values, and CI
-workflows; the application source lives in the bitcoin-retry-endpoint
+workflows; the application source lives in the retry-endpoint
 repository.
 
 =========================================================================

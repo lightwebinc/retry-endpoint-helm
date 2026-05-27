@@ -2,16 +2,16 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "bitcoin-retry-endpoint.fullname" . }}
+  name: {{ include "retry-endpoint.fullname" . }}
   labels:
-    {{- include "bitcoin-retry-endpoint.labels" . | nindent 4 }}
+    {{- include "retry-endpoint.labels" . | nindent 4 }}
     {{- with .Values.metrics.serviceMonitor.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   selector:
     matchLabels:
-      {{- include "bitcoin-retry-endpoint.selectorLabels" . | nindent 6 }}
+      {{- include "retry-endpoint.selectorLabels" . | nindent 6 }}
   endpoints:
     - port: metrics
       path: {{ .Values.metrics.path }}

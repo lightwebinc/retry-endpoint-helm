@@ -1,10 +1,10 @@
-# Default values for bitcoin-retry-endpoint.
+# Default values for retry-endpoint.
 # Every binary flag is exposed under .config; advanced ones empty/disabled by default.
 
 replicaCount: 1
 
 image:
-  repository: ghcr.io/lightwebinc/bitcoin-retry-endpoint
+  repository: ghcr.io/lightwebinc/retry-endpoint
   pullPolicy: IfNotPresent
   tag: ""
 
@@ -30,13 +30,13 @@ networking:
   mode: multus
   multus:
     networkName: mcast-fabric
-    namespace: bitcoin-mcast
+    namespace: bsv-mcast
     fabricIPv6: ""
     interface: net1
   host:
     dnsPolicy: ClusterFirstWithHostNet
 
-# Full surface — every flag in bitcoin-retry-endpoint/config/config.go.
+# Full surface — every flag in retry-endpoint/config/config.go.
 config:
   # Ingress (multicast receive)
   mcIface: "eth0"

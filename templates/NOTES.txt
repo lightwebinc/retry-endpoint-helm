@@ -1,4 +1,4 @@
-{{ include "bitcoin-retry-endpoint.fullname" . }} installed in namespace {{ .Release.Namespace }}.
+{{ include "retry-endpoint.fullname" . }} installed in namespace {{ .Release.Namespace }}.
 
 Networking mode: {{ .Values.networking.mode }}
 
@@ -22,7 +22,7 @@ Set config.redisAddr to your Redis service address (host:port).
 {{- end }}
 {{- end }}
 
-Metrics: http://{{ include "bitcoin-retry-endpoint.fullname" . }}.{{ .Release.Namespace }}.svc:{{ .Values.service.metricsPort }}{{ .Values.metrics.path }}
+Metrics: http://{{ include "retry-endpoint.fullname" . }}.{{ .Release.Namespace }}.svc:{{ .Values.service.metricsPort }}{{ .Values.metrics.path }}
 
 Beacon (BRC-126):
   Tier: {{ .Values.config.beaconTier }}
@@ -30,4 +30,4 @@ Beacon (BRC-126):
   Interval: {{ .Values.config.beaconInterval }}
   Scope: {{ .Values.config.beaconScope }}
 
-See https://github.com/lightwebinc/bitcoin-retry-endpoint-helm for the full values reference.
+See https://github.com/lightwebinc/retry-endpoint-helm for the full values reference.

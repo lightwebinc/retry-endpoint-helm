@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "bitcoin-retry-endpoint.fullname" . }}
+  name: {{ include "retry-endpoint.fullname" . }}
   labels:
-    {{- include "bitcoin-retry-endpoint.labels" . | nindent 4 }}
+    {{- include "retry-endpoint.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "bitcoin-retry-endpoint.selectorLabels" . | nindent 6 }}
+      {{- include "retry-endpoint.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
         {{- if eq .Values.networking.mode "multus" }}
-        {{- include "bitcoin-retry-endpoint.multusAnnotation" . | nindent 8 }}
+        {{- include "retry-endpoint.multusAnnotation" . | nindent 8 }}
         {{- end }}
         {{- if not .Values.config.nackAddr }}
         helm.sh/chart-warnings: "config.nackAddr is empty; binary will auto-detect from egress interface. In containerized deployments this may resolve to a SLAAC address that listeners do not trust. Set config.nackAddr explicitly."
@@ -24,12 +24,12 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "bitcoin-retry-endpoint.selectorLabels" . | nindent 8 }}
+        {{- include "retry-endpoint.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ include "bitcoin-retry-endpoint.serviceAccountName" . }}
+      serviceAccountName: {{ include "retry-endpoint.serviceAccountName" . }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -54,7 +54,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            {{- include "bitcoin-retry-endpoint.env" . | nindent 12 }}
+            {{- include "retry-endpoint.env" . | nindent 12 }}
           ports:
             - name: udp-mcast
               containerPort: {{ .Values.config.listenPort }}
