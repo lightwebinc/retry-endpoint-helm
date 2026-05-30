@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type RELEASE to publish chart to GH Pages and OCI registry'
+        description: 'Type RELEASE to publish chart to OCI registry'
         required: true
 
 permissions:
