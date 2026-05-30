@@ -43,6 +43,27 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 - ACK/MISS response suppression
 - BRC-132 subtree data caching
 - OpenTelemetry OTLP push
+- SSM (RFC 4607) opt-in: `config.sourceMode=ssm` + `config.bindSource` + per-control-group bootstrap
+
+### SSM (Source-Specific Multicast)
+
+`config.sourceMode` defaults to `asm`. When `ssm`:
+
+- `config.bindSource` MUST be the per-pod IPv6 from your
+  Multus/Whereabouts allocation. The beacon emit socket binds it via
+  `net.DialUDP(laddr=...)` so SSM listeners can pre-declare this
+  retry-endpoint in their `ssmBootstrap.beacon`. Each replica MUST
+  hold a distinct address — anycast / ECMP-shared sources break
+  PIM-SSM RPF.
+- `config.ssmBootstrap.{manifest,beacon,subtreeAnnounce}` (DNS names
+  or IPv6 literals) supply the source lists for the matching control
+  groups when retry-endpoint joins them. Resolved via
+  `shard-common/bootstrap.Resolver` (fail-closed startup).
+- `config.ssmPublishersStatic` is a lab/CI escape hatch for the
+  data-plane source list; production uses manifest-driven discovery.
+
+See the [SSM Support Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/SourceSpecificMulticast/ssm-support-plan.md)
+for fabric prerequisites (PIM-SSM, MLDv2, raised `mld_max_msf`).
 
 ## Helm test
 
