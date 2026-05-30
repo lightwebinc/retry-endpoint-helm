@@ -45,6 +45,21 @@ config:
   mcScope: "site"
   mcGroupId: "0x000B"
 
+  # SSM (RFC 4607). See bsv-multicast/docs/SourceSpecificMulticast.
+  # sourceMode "ssm" requires at least one of ssmBootstrap.* or
+  # ssmPublishersStatic. retry-endpoint also EMITS NACK-discovery beacons,
+  # so set bindSource to the per-pod IPv6 from Multus/Whereabouts. SSM
+  # listeners pre-declare retry-endpoints in sources.bootstrap.beacon
+  # against this address.
+  sourceMode: "asm"
+  bindSource: ""
+  ssmBootstrap:
+    manifest: []
+    beacon: []
+    subtreeAnnounce: []
+  ssmPublishersStatic: []
+  ssmBootstrapRefresh: "30s"
+
   # Egress (retransmission)
   egressIface: "eth0"   # comma-separated allowed
   egressPort: 9001
