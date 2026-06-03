@@ -25,9 +25,20 @@ Without `config.nackAddr` the binary attempts to auto-detect from the egress int
 
 In `multus` mode, set `config.nackAddr` to the per-pod fabric IPv6 from `networking.multus.fabricIPv6` (no CIDR mask).
 
-### Redis (optional)
+### Cache backend (optional)
 
-This chart **does not** bundle a Redis subchart. To use `config.cacheBackend=redis`, install Redis separately (e.g. `bitnami/redis`) and set `config.redisAddr=<host>:6379`.
+The frame cache uses the modular `shard-common/cache` backend. Select it with
+`config.cacheBackend`:
+
+| Value | Storage | Keys to set | Notes |
+|-------|---------|-------------|-------|
+| `memory` (default) | in-process | — | per-pod, lost on restart; set `config.redisAddr` to add cross-instance dedup only |
+| `redis` | Redis/Valkey/Dragonfly | `config.redisAddr=<host>:6379` | shared frames + dedup |
+| `aerospike` | Aerospike Community Edition | `config.aerospikeHosts=<h:3000,…>`, `config.aerospikeNamespace`, `config.aerospikeSet` | auto-sharded; namespace must be provisioned; **TTL floor 1s** |
+
+This chart **does not** bundle a Redis or Aerospike subchart — install the
+backend separately (e.g. `bitnami/redis`, or an Aerospike CE StatefulSet). See
+[`bsv-multicast/docs/ModularCacheBackend/`](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/ModularCacheBackend/modular-cache-backend.md).
 
 ## Networking modes
 

@@ -74,9 +74,18 @@ config:
   nackAddr: ""
   nackWorkers: 0        # 0 = NumCPU
 
-  # Cache
-  cacheBackend: "memory"  # memory | redis
-  redisAddr: ""           # required when cacheBackend=redis; cross-instance dedup with memory backend
+  # Cache — modular shard-common/cache backend.
+  # See bsv-multicast/docs/ModularCacheBackend/modular-cache-backend.md
+  cacheBackend: "memory"  # memory | redis | aerospike
+  redisAddr: ""           # required when cacheBackend=redis (Redis/Valkey/Dragonfly); cross-instance dedup with memory backend
+  # Aerospike Community Edition (required when cacheBackend=aerospike).
+  # TTL granularity is whole seconds, floor 1s — all frame TTLs satisfy this.
+  # The namespace must be provisioned on the cluster.
+  aerospikeHosts: ""              # comma-separated host:port (e.g. "aero-0:3000,aero-1:3000")
+  aerospikeNamespace: "cache"
+  aerospikeSet: "bre"
+  cacheDialTimeout: "1s"  # backend dial timeout
+  cacheOpTimeout: "1s"    # backend per-operation timeout (fail-open on exceed)
   cacheTtl: "60s"
   cacheTtlTx: "60s"
   cacheTtlBlock: "10m"

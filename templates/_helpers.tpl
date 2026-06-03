@@ -121,6 +121,18 @@ k8s.v1.cni.cncf.io/networks: |
 - name: REDIS_ADDR
   value: {{ .Values.config.redisAddr | quote }}
 {{- end }}
+{{- if .Values.config.aerospikeHosts }}
+- name: AEROSPIKE_HOSTS
+  value: {{ .Values.config.aerospikeHosts | quote }}
+- name: AEROSPIKE_NAMESPACE
+  value: {{ .Values.config.aerospikeNamespace | quote }}
+- name: AEROSPIKE_SET
+  value: {{ .Values.config.aerospikeSet | quote }}
+{{- end }}
+- name: CACHE_DIAL_TIMEOUT
+  value: {{ .Values.config.cacheDialTimeout | quote }}
+- name: CACHE_OP_TIMEOUT
+  value: {{ .Values.config.cacheOpTimeout | quote }}
 - name: CACHE_TTL
   value: {{ .Values.config.cacheTtl | quote }}
 - name: CACHE_TTL_TX
