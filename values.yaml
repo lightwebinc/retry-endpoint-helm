@@ -122,7 +122,11 @@ config:
 
   # Runtime
   drainTimeout: "0s"
-  debug: false
+  debug: false  # deprecated alias for logLevel=debug
+  # Unified logging — see bsv-multicast/docs/UnifiedLogging/unified-logging-plan.md
+  logFormat: "text"   # text (stderr) | json (stdout, for fleet aggregation)
+  logLevel: "info"    # debug|info|warn|error; runtime-togglable via POST /loglevel + SIGHUP
+  traceSampling: 0    # 0..1 trace head sampling (0 = off; exports via otlpEndpoint; control-plane only)
 
   # Observability
   metricsAddr: ":9400"

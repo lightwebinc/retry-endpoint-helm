@@ -50,7 +50,10 @@
         "beaconScope":  { "type": "string", "enum": ["link", "site", "org", "global", "both", "all"] },
         "beaconTier":       { "type": "integer", "minimum": 0, "maximum": 255 },
         "beaconPreference": { "type": "integer", "minimum": 0, "maximum": 255 },
-        "debug":        { "type": "boolean" }
+        "debug":        { "type": "boolean" },
+        "logFormat":     { "type": "string", "enum": ["text", "json"] },
+        "logLevel":      { "type": "string", "enum": ["debug", "info", "warn", "error"] },
+        "traceSampling": { "type": "number", "minimum": 0, "maximum": 1 }
       }
     }
   }

@@ -54,6 +54,7 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 - ACK/MISS response suppression
 - BRC-132 subtree data caching
 - OpenTelemetry OTLP push
+- Unified logging: `config.logFormat` (`text`|`json`) → `LOG_FORMAT`, `config.logLevel` → `LOG_LEVEL`, `config.traceSampling` (`0`–`1`) → `TRACE_SAMPLING` (schema-validated); runtime `/loglevel` + SIGHUP. See the [Unified Logging Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/UnifiedLogging/unified-logging-plan.md).
 - SSM (RFC 4607) opt-in: `config.sourceMode=ssm` + `config.bindSource` + per-control-group bootstrap
 
 ### SSM (Source-Specific Multicast)
