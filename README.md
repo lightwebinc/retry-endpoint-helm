@@ -38,7 +38,7 @@ The frame cache uses the modular `shard-common/cache` backend. Select it with
 
 This chart **does not** bundle a Redis or Aerospike subchart — install the
 backend separately (e.g. `bitnami/redis`, or an Aerospike CE StatefulSet). See
-[`bsv-multicast/docs/ModularCacheBackend/`](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/ModularCacheBackend/modular-cache-backend.md).
+[`shard-common/docs/cache-backend.md`](https://github.com/lightwebinc/shard-common/blob/main/docs/cache-backend.md).
 
 ## Networking modes
 
@@ -54,7 +54,7 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 - ACK/MISS response suppression
 - BRC-132 subtree data caching
 - OpenTelemetry OTLP push
-- Unified logging: `config.logFormat` (`text`|`json`) → `LOG_FORMAT`, `config.logLevel` → `LOG_LEVEL`, `config.traceSampling` (`0`–`1`) → `TRACE_SAMPLING` (schema-validated); runtime `/loglevel` + SIGHUP. See the [Unified Logging Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/UnifiedLogging/unified-logging-plan.md).
+- Unified logging: `config.logFormat` (`text`|`json`) → `LOG_FORMAT`, `config.logLevel` → `LOG_LEVEL`, `config.traceSampling` (`0`–`1`) → `TRACE_SAMPLING` (schema-validated); runtime `/loglevel` + SIGHUP. See the [Unified Logging Plan](https://github.com/lightwebinc/shard-common/blob/main/docs/logging.md).
 - SSM (RFC 4607) opt-in: `config.sourceMode=ssm` + `config.bindSource` + per-control-group bootstrap
 - NACK proxying (cross-domain recovery) opt-in: `config.proxyEnabled=true` + `config.upstreamRetryEndpoints` (recovers cache misses from an upstream endpoint and re-serves this domain). See [BRC-126](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/brc-126-retransmission-protocol.md).
 
