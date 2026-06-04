@@ -107,6 +107,22 @@ k8s.v1.cni.cncf.io/networks: |
   value: {{ .Values.config.egressPort | quote }}
 - name: DEDUP_WINDOW
   value: {{ .Values.config.dedupWindow | quote }}
+{{- if .Values.config.proxyEnabled }}
+- name: PROXY_ENABLED
+  value: "true"
+- name: UPSTREAM_RETRY_ENDPOINTS
+  value: {{ join "," .Values.config.upstreamRetryEndpoints | quote }}
+- name: PROXY_TIMEOUT
+  value: {{ .Values.config.proxyTimeout | quote }}
+- name: PROXY_MAX_ENDPOINTS
+  value: {{ .Values.config.proxyMaxEndpoints | quote }}
+- name: PROXY_DEDUP_WINDOW
+  value: {{ .Values.config.proxyDedupWindow | quote }}
+- name: PROXY_WORKERS
+  value: {{ .Values.config.proxyWorkers | quote }}
+- name: PROXY_QUEUE
+  value: {{ .Values.config.proxyQueue | quote }}
+{{- end }}
 - name: NACK_PORT
   value: {{ .Values.config.nackPort | quote }}
 {{- if .Values.config.nackAddr }}

@@ -2,8 +2,8 @@ apiVersion: v2
 name: retry-endpoint
 description: BSV multicast retry endpoint — caches frames and retransmits on NACK
 type: application
-version: 0.2.1
-appVersion: "0.1.0"
+version: 0.2.2
+appVersion: "1.4.3"
 kubeVersion: ">= 1.27.0-0"
 keywords:
   - bitcoin
@@ -24,4 +24,4 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/changes: |
     - kind: added
-      description: Initial chart scaffold
+      description: NACK proxying config (proxyEnabled, upstreamRetryEndpoints, proxy tuning)

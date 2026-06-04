@@ -65,6 +65,17 @@ config:
   egressPort: 9001
   dedupWindow: "60s"
 
+  # NACK proxying (cross-domain recovery). When enabled, a cache miss is
+  # recovered from an upstream retry-endpoint and re-served into this domain.
+  # See bsv-multicast/docs/brc-126-retransmission-protocol.md.
+  proxyEnabled: false
+  upstreamRetryEndpoints: []   # host:port list; REQUIRED when proxyEnabled
+  proxyTimeout: "300ms"
+  proxyMaxEndpoints: 0         # 0 = all upstreams
+  proxyDedupWindow: "60s"
+  proxyWorkers: 4
+  proxyQueue: 1024
+
   # NACK server
   nackPort: 9300
   # nackAddr is REQUIRED in containerized deployments. The binary will

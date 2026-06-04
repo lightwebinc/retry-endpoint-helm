@@ -56,6 +56,7 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 - OpenTelemetry OTLP push
 - Unified logging: `config.logFormat` (`text`|`json`) → `LOG_FORMAT`, `config.logLevel` → `LOG_LEVEL`, `config.traceSampling` (`0`–`1`) → `TRACE_SAMPLING` (schema-validated); runtime `/loglevel` + SIGHUP. See the [Unified Logging Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/UnifiedLogging/unified-logging-plan.md).
 - SSM (RFC 4607) opt-in: `config.sourceMode=ssm` + `config.bindSource` + per-control-group bootstrap
+- NACK proxying (cross-domain recovery) opt-in: `config.proxyEnabled=true` + `config.upstreamRetryEndpoints` (recovers cache misses from an upstream endpoint and re-serves this domain). See [BRC-126](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/brc-126-retransmission-protocol.md).
 
 ### SSM (Source-Specific Multicast)
 
