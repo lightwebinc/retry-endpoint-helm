@@ -1,5 +1,7 @@
 # retry-endpoint Helm chart
 
+> Part of the [**BSV Layered Multicast**](https://github.com/lightwebinc/bsv-multicast) open-source project — see the main repository for the full architecture, design docs, and BRC specifications.
+
 Helm chart for [retry-endpoint](https://github.com/lightwebinc/retry-endpoint) — the BSV multicast retry endpoint that caches frames and retransmits them on NACK.
 
 This repository packages templates, default values, JSON Schema validation, and CI workflows for the retry endpoint. The application source lives in [`retry-endpoint`](https://github.com/lightwebinc/retry-endpoint).
