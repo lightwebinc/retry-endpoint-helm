@@ -19,7 +19,16 @@ serviceAccount:
 
 podAnnotations: {}
 podLabels: {}
-podSecurityContext: {}
+# Matches the distroless/static:nonroot image (uid 65532). Enforces nonroot even if
+# the image is overridden. NET_ADMIN is granted below at the container level, which is
+# compatible with running as nonroot.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  fsGroup: 65532
+  seccompProfile:
+    type: RuntimeDefault
 
 # Multicast ingress + egress on dedicated fabric NIC requires NET_ADMIN.
 securityContext:
@@ -175,7 +184,17 @@ probes:
     timeoutSeconds: 5
     failureThreshold: 3
 
-resources: {}
+# Recovery component (frame cache + NACK serving / retransmit, cache-backend backed).
+# Lighter datapath than proxy/listener but cache lookups dominate; size memory to
+# your resend window. Conservative starting points — tune against your own load.
+# Empty ({}) yields BestEffort QoS and no admission control.
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 512Mi
 nodeSelector: {}
 tolerations: []
 affinity: {}
