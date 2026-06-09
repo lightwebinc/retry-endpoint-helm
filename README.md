@@ -77,7 +77,7 @@ See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed u
 - `config.ssmPublishersStatic` is a lab/CI escape hatch for the
   data-plane source list; production uses manifest-driven discovery.
 
-See the [SSM Support Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/docs/SourceSpecificMulticast/ssm-support-plan.md)
+See the [SSM Support Plan](https://github.com/lightwebinc/bsv-multicast/blob/main/DESIGN.md#source-specific-multicast-ssm)
 for fabric prerequisites (PIM-SSM, MLDv2, raised `mld_max_msf`).
 
 ## Helm test
