@@ -5,6 +5,8 @@
   "additionalProperties": true,
   "properties": {
     "replicaCount": { "type": "integer", "minimum": 0 },
+    "resources": { "type": "object" },
+    "podSecurityContext": { "type": "object" },
     "image": {
       "type": "object",
       "properties": {

@@ -8,11 +8,11 @@ This repository packages templates, default values, JSON Schema validation, and 
 
 ## Install
 
-> The chart references `ghcr.io/lightwebinc/retry-endpoint:<appVersion>`. The image is delivered by Phase 1 of the containerization roadmap; until then `helm template` succeeds but `helm install` results in `ImagePullBackOff`.
+> The chart references `ghcr.io/lightwebinc/retry-endpoint:<appVersion>` — `appVersion` always tracks a published image tag (see the contract note in [`Chart.yaml`](Chart.yaml)).
 
 ```bash
 helm install retry-node-1 oci://ghcr.io/lightwebinc/charts/retry-endpoint \
-  --version 0.1.0 -n bsv-mcast --create-namespace \
+  --version 0.2.3 -n bsv-mcast --create-namespace \
   --set config.nackAddr=fd20::24 \
   --set 'nodeSelector.bsv-mcast/node=retry-1'
 ```
@@ -47,6 +47,10 @@ backend separately (e.g. `bitnami/redis`, or an Aerospike CE StatefulSet). See
 Same as the other charts — `multus` (default), `host`, `unicast` (reserved).
 
 ## Values reference
+
+### Pod defaults (v0.2.3+)
+
+The chart ships hardened pod-level defaults: `resources` requests/limits (size memory to your resend window) and a nonroot `podSecurityContext` (uid 65532, seccomp `RuntimeDefault`, matching the distroless image).
 
 See [`values.yaml`](values.yaml). Every flag accepted by the binary is exposed under `.config`, including:
 
