@@ -60,7 +60,7 @@ config:
   # so set bindSource to the per-pod IPv6 from Multus/Whereabouts. SSM
   # listeners pre-declare retry-endpoints in sources.bootstrap.beacon
   # against this address.
-  sourceMode: "asm"
+  sourceMode: "ssm"
   bindSource: ""
   ssmBootstrap:
     manifest: []
