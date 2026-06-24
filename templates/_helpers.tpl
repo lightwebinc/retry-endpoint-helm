@@ -66,7 +66,7 @@ k8s.v1.cni.cncf.io/networks: |
 - name: MC_IFACE
   value: {{ include "retry-endpoint.iface" . | quote }}
 - name: EGRESS_IFACE
-  value: {{ include "retry-endpoint.iface" . | quote }}
+  value: {{ .Values.config.egressIface | default (include "retry-endpoint.iface" .) | quote }}
 - name: LISTEN_PORT
   value: {{ .Values.config.listenPort | quote }}
 - name: SHARD_BITS
