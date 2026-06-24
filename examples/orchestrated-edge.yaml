@@ -1,0 +1,21 @@
+# Orchestrated edge preset (W2): retry-endpoint as a hostNetwork pod on a fleet-
+# provisioned k0s worker. Serves BRC-126 NACK retransmission for its co-located
+# listener over the host fabric. Pin per region and tolerate the data-plane taint.
+#
+#   helm install retry-us . -f examples/orchestrated-edge.yaml \
+#     --set nodeSelector."topology\.kubernetes\.io/region"=us
+networking:
+  mode: host
+  host:
+    dnsPolicy: ClusterFirstWithHostNet
+
+config:
+  metricsAddr: ":9400"
+
+nodeSelector:
+  topology.kubernetes.io/region: us
+
+tolerations:
+  - key: dataplane
+    operator: Exists
+    effect: NoSchedule
