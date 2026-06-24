@@ -72,6 +72,14 @@ config:
   # Egress (retransmission)
   egressIface: "eth0"   # comma-separated allowed
   egressPort: 9001
+  # egressMulticastLoop -> EGRESS_MULTICAST_LOOP (sets the IPV6_MULTICAST_LOOP socket
+  # option). REQUIRED true on a COLLAPSED node: the kernel MFC only forwards the
+  # retry-endpoint's locally-emitted retransmits onto the fabric tunnels (and to a
+  # co-resident listener) when loop is on. null inherits the binary default (off).
+  # egressHoplimit raises the multicast hop limit (default 1 dies on the first
+  # mesh/tunnel hop; 0 inherits the binary default).
+  egressMulticastLoop: null
+  egressHoplimit: 0
   dedupWindow: "60s"
 
   # NACK proxying (cross-domain recovery). When enabled, a cache miss is

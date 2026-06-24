@@ -2,7 +2,7 @@ apiVersion: v2
 name: retry-endpoint
 description: BSV multicast retry endpoint — caches frames and retransmits on NACK
 type: application
-version: 0.2.4
+version: 0.2.5
 # appVersion MUST equal a tag published on ghcr.io/lightwebinc/retry-endpoint
 # (the chart's tag:"" default pulls this). Images are published manually via the
 # binary repo's image-publish.yml workflow; bump appVersion ONLY in lockstep with
@@ -31,3 +31,5 @@ annotations:
       description: NACK proxying config (proxyEnabled, upstreamRetryEndpoints, proxy tuning)
     - kind: added
       description: config.egressIface (retransmission egress iface, defaults separately from mcIface) + orchestrated-edge example
+    - kind: added
+      description: config.egressMulticastLoop / config.egressHoplimit (collapsed-node multicast egress)

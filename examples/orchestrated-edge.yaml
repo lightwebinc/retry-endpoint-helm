@@ -11,6 +11,11 @@ networking:
 
 config:
   metricsAddr: ":9400"
+  # Collapsed/mesh node: locally-emitted retransmits only reach the MFC (for
+  # fan-out onto the fabric tunnels) when multicast loop is on, and need a raised
+  # hop limit to survive the first mesh/tunnel hop.
+  egressMulticastLoop: true
+  egressHoplimit: 16
 
 nodeSelector:
   topology.kubernetes.io/region: us

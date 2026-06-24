@@ -32,6 +32,8 @@
         "listenPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },
         "nackPort":     { "type": "integer", "minimum": 1, "maximum": 65535 },
         "egressPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "egressMulticastLoop": { "type": ["boolean", "null"] },
+        "egressHoplimit":      { "type": "integer" },
         "proxyEnabled":           { "type": "boolean" },
         "upstreamRetryEndpoints": { "type": "array", "items": { "type": "string" } },
         "proxyMaxEndpoints":      { "type": "integer", "minimum": 0 },

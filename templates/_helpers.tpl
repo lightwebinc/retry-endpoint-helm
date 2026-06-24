@@ -105,6 +105,14 @@ k8s.v1.cni.cncf.io/networks: |
 {{- end }}
 - name: EGRESS_PORT
   value: {{ .Values.config.egressPort | quote }}
+{{- if kindIs "bool" .Values.config.egressMulticastLoop }}
+- name: EGRESS_MULTICAST_LOOP
+  value: {{ .Values.config.egressMulticastLoop | quote }}
+{{- end }}
+{{- if .Values.config.egressHoplimit }}
+- name: EGRESS_HOPLIMIT
+  value: {{ .Values.config.egressHoplimit | quote }}
+{{- end }}
 - name: DEDUP_WINDOW
   value: {{ .Values.config.dedupWindow | quote }}
 {{- if .Values.config.proxyEnabled }}
