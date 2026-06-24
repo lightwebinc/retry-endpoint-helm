@@ -26,6 +26,9 @@
     "config": {
       "type": "object",
       "properties": {
+        "mcIface":      { "type": "string" },
+        "egressIface":  { "type": "string" },
+        "nackAddr":     { "type": "string" },
         "listenPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },
         "nackPort":     { "type": "integer", "minimum": 1, "maximum": 65535 },
         "egressPort":   { "type": "integer", "minimum": 1, "maximum": 65535 },

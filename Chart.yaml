@@ -29,3 +29,5 @@ annotations:
   artifacthub.io/changes: |
     - kind: added
       description: NACK proxying config (proxyEnabled, upstreamRetryEndpoints, proxy tuning)
+    - kind: added
+      description: config.egressIface (retransmission egress iface, defaults separately from mcIface) + orchestrated-edge example

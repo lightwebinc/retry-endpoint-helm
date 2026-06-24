@@ -27,6 +27,10 @@ Without `config.nackAddr` the binary attempts to auto-detect from the egress int
 
 In `multus` mode, set `config.nackAddr` to the per-pod fabric IPv6 from `networking.multus.fabricIPv6` (no CIDR mask).
 
+### `config.egressIface` vs `config.mcIface`
+
+The receive iface (`config.mcIface` → `MC_IFACE`, where the endpoint joins the multicast group) and the retransmission **egress** iface (`config.egressIface` → comma-separated NIC list) now default **separately**. On a single-NIC node both stay `eth0`; on a collapsed/multi-NIC edge the retransmit may leave a different interface than the one it receives on, so set `config.egressIface` explicitly rather than assuming it tracks `mcIface`.
+
 ### Cache backend (optional)
 
 The frame cache uses the modular `shard-common/cache` backend. Select it with
@@ -45,6 +49,18 @@ backend separately (e.g. `bitnami/redis`, or an Aerospike CE StatefulSet). See
 ## Networking modes
 
 Same as the other charts — `multus` (default), `host`, `unicast` (reserved).
+
+### Orchestrated edge (W2)
+
+On a fleet-orchestrated collapsed edge the retry endpoint runs as a `hostNetwork` pod on a k0s worker, serving BRC-126 NACK retransmission for its co-located listener over the host ip6gre fabric. Pin per region and tolerate the data-plane taint. Worked example: [`examples/orchestrated-edge.yaml`](examples/orchestrated-edge.yaml).
+
+```sh
+helm install retry-us . -f examples/orchestrated-edge.yaml \
+  --set nodeSelector."topology\.kubernetes\.io/region"=us \
+  --set config.nackAddr=<pod fabric IPv6>
+```
+
+`config.nackAddr` stays required (see above); on a multi-NIC edge also set `config.egressIface` to the retransmission NIC when it differs from `config.mcIface`.
 
 ## Values reference
 
