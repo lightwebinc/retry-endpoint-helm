@@ -12,7 +12,7 @@ This repository packages templates, default values, JSON Schema validation, and 
 
 ```bash
 helm install retry-node-1 oci://ghcr.io/lightwebinc/charts/retry-endpoint \
-  --version 0.5.1 -n bsv-mcast --create-namespace \
+  --version 0.5.3 -n bsv-mcast --create-namespace \
   --set config.nackAddr=2001:db8::24 \
   --set 'nodeSelector.bsv-mcast/node=retry-1'
 ```
@@ -67,7 +67,7 @@ helm install retry-node-1 . -f examples/collapsed-node.yaml \
 
 The chart ships hardened pod-level defaults: `resources` requests/limits (size memory to your resend window) and a nonroot `podSecurityContext` (uid 65532, seccomp `RuntimeDefault`, matching the distroless image).
 
-See [`values.yaml`](values.yaml). Most flags accepted by the binary are exposed under `.config` — `-rl-sender-rate`/`-rl-sender-window` are settable via `extraEnv` — including:
+See [`values.yaml`](values.yaml). Most flags accepted by the binary are exposed under `.config` — `-rl-sender-rate`/`-rl-sender-window`, `-tee-listen` (`TEE_LISTEN`, loopback frame mirror from a co-resident proxy/listener `-retry-tee`) and `-mc-join-enabled` (`MC_JOIN_ENABLED`, `false` = tee-only ingest, requires `TEE_LISTEN`) are settable via `extraEnv` (all read by the default appVersion; the tee pair needs image ≥ 1.10.1) — including:
 
 - Per-FrameVer cache TTLs (tx / block / subtree / anchor)
 - All five rate-limit tiers (IP / sender / sequence / chain / group), plus the opt-in THROTTLED backoff reply: `config.rlThrottleResponse` → `RL_THROTTLE_RESPONSE`

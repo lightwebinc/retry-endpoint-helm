@@ -1,5 +1,7 @@
 # Default values for retry-endpoint.
-# Every binary flag is exposed under .config; advanced ones empty/disabled by default.
+# Most binary flags are exposed under .config; advanced ones empty/disabled by default.
+# extraEnv-only: RL_SENDER_RATE / RL_SENDER_WINDOW, TEE_LISTEN and MC_JOIN_ENABLED
+# (tee ingest + join gate, image >= 1.10.1).
 
 replicaCount: 1
 
@@ -45,8 +47,8 @@ networking:
   host:
     dnsPolicy: ClusterFirstWithHostNet
 
-# Most flags in retry-endpoint/config/config.go; -rl-sender-rate/-rl-sender-window
-# are settable via extraEnv.
+# Most flags in retry-endpoint/config/config.go; -rl-sender-rate/-rl-sender-window,
+# -tee-listen and -mc-join-enabled are settable via extraEnv.
 config:
   # Ingress (multicast receive)
   mcIface: "eth0"
